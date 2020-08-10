@@ -146,7 +146,7 @@ application {
 }
 
 bootJar {
-    archivesBaseName = 'gradle-multimodule-spring-example'
+    archivesBaseName = 'spring-gradle-ddd-skeleton'
     archiveVersion = '0.0.1'
 }
 

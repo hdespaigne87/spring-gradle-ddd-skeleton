@@ -1,0 +1,21 @@
+name: CI Workflow
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build
+        run: ./gradlew build --warning-mode all
+
+      - name: Tests
+        run: ./gradlew test --warning-mode all
+
+
