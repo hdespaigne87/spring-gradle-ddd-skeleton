@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':bounded_contexts_shared_application')
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.reflections:reflections:0.9.11'
+}
