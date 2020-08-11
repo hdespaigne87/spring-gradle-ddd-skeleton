@@ -26,8 +26,8 @@ class GenerateApplicationTask extends GenericCustomTask {
             throw new Exception(String.format("An application with name '%s' already exists.", appName))
     }
 
-    private void createBasePackages(String appName, String appFolderPath) {
-        String folderToCreate = String.format("%s/main/java", appFolderPath).replace("/", File.separator)
+    private void createBasePackages(String sourceFolder, String appName, String appFolderPath) {
+        String folderToCreate = String.format("%s/%s/java", appFolderPath, sourceFolder).replace("/", File.separator)
         project.ext.basePackage.toString().split("\\.").collect { folder ->
             folderToCreate = String.format("%s/%s", folderToCreate, folder).replace("/", File.separator)
             new File(folderToCreate).mkdir()
@@ -45,6 +45,7 @@ class GenerateApplicationTask extends GenericCustomTask {
         String targetFolder = String.format("%s%s%s", project.rootDir.absolutePath, "/src/applications/", appName).replace("/", File.separator)
         FileUtils.copyDirectory(new File(sourceFolder), new File(targetFolder))
 
-        createBasePackages(appName, targetFolder)
+        createBasePackages("main", appName, targetFolder)
+        createBasePackages("test", appName, targetFolder)
     }
 }

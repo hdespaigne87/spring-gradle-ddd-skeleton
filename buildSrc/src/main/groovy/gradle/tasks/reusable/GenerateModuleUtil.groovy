@@ -35,8 +35,8 @@ class GenerateModuleUtil {
             throw new Exception(String.format("A module with name '%s' already exists into bounded context '%s'.", moduleName, boundedContextName))
     }
 
-    private String createBasePackages(String boundedContextName, String moduleName, String moduleFolderPath, String layerName) {
-        String folderToCreate = String.format("%s/%s/main/java", moduleFolderPath, layerName).replace("/", File.separator)
+    private String createBasePackages(String sourceFolder, String boundedContextName, String moduleName, String moduleFolderPath, String layerName) {
+        String folderToCreate = String.format("%s/%s/%s/java", moduleFolderPath, layerName, sourceFolder).replace("/", File.separator)
         project.ext.basePackage.toString().split("\\.").collect { folder ->
             folderToCreate = String.format("%s/%s", folderToCreate, folder).replace("/", File.separator)
             new File(folderToCreate).mkdir()
@@ -70,10 +70,10 @@ class GenerateModuleUtil {
         new File(folderToCreate).mkdir()
     }
 
-    private void createBasePackages(String boundedContextName, String moduleName, String moduleFolderPath) {
-        String applicationBasePackage = createBasePackages(boundedContextName, moduleName, moduleFolderPath, "application")
-        String domainBasePackage = createBasePackages(boundedContextName, moduleName, moduleFolderPath, "domain")
-        createBasePackages(boundedContextName, moduleName, moduleFolderPath, "infrastructure")
+    private void createBasePackages(String sourceFolder, String boundedContextName, String moduleName, String moduleFolderPath) {
+        String applicationBasePackage = createBasePackages(sourceFolder, boundedContextName, moduleName, moduleFolderPath, "application")
+        String domainBasePackage = createBasePackages(sourceFolder, boundedContextName, moduleName, moduleFolderPath, "domain")
+        createBasePackages(sourceFolder, boundedContextName, moduleName, moduleFolderPath, "infrastructure")
 
         createApplicationBasePackages(applicationBasePackage)
         createDomainBasePackages(domainBasePackage)
@@ -87,6 +87,7 @@ class GenerateModuleUtil {
         String targetFolder = String.format("%s%s%s/%s", project.rootDir.absolutePath, "/src/bounded_contexts/", boundedContextName, moduleName).replace("/", File.separator)
         FileUtils.copyDirectory(new File(sourceFolder), new File(targetFolder))
 
-        createBasePackages(boundedContextName, moduleName, targetFolder)
+        createBasePackages("main", boundedContextName, moduleName, targetFolder)
+        createBasePackages("test", boundedContextName, moduleName, targetFolder)
     }
 }
