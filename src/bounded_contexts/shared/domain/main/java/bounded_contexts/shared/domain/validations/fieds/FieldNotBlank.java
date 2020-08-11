@@ -12,7 +12,7 @@ public class FieldNotBlank extends FieldValidation {
             return false;
         if (!(fieldValueToValidate instanceof String))
             return true;
-        return !((String)fieldValueToValidate).isBlank();
+        return !((String)fieldValueToValidate).trim().isEmpty();
     }
 
     @Override
