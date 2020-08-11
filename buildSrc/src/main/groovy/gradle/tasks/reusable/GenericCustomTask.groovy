@@ -9,6 +9,10 @@ abstract class GenericCustomTask extends DefaultTask {
         return getProperty(propertyKey, true).get()
     }
 
+    String[] getBasePackageParts() {
+        return project.property("basePackage").split("\\.")
+    }
+
     Optional<String> getProperty(String propertyKey, boolean required) {
         String value = project.properties.get(propertyKey)
         if (required && value == null)

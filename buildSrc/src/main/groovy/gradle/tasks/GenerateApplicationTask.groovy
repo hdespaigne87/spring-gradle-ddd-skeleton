@@ -28,7 +28,7 @@ class GenerateApplicationTask extends GenericCustomTask {
 
     private void createBasePackages(String sourceFolder, String appName, String appFolderPath) {
         String folderToCreate = String.format("%s/%s/java", appFolderPath, sourceFolder).replace("/", File.separator)
-        project.ext.basePackage.toString().split("\\.").collect { folder ->
+        getBasePackageParts().collect { folder ->
             folderToCreate = String.format("%s/%s", folderToCreate, folder).replace("/", File.separator)
             new File(folderToCreate).mkdir()
         }

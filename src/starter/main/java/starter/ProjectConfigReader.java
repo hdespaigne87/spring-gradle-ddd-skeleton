@@ -15,7 +15,7 @@ public final class ProjectConfigReader {
     private static Properties readProperties() {
         Properties projectProperties = new Properties();
         try {
-            projectProperties.load(new FileInputStream(new File("").getAbsolutePath() + File.separator + "project.properties"));
+            projectProperties.load(new FileInputStream(new File("").getAbsolutePath() + File.separator + "gradle.properties"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

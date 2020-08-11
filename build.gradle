@@ -24,10 +24,6 @@ plugins {
     id 'io.freefair.lombok' version '5.1.1'
 }
 
-Properties projectProperties = new Properties()
-projectProperties.load(new FileInputStream(projectDir.absolutePath + File.separator + "project.properties"))
-projectProperties.each { prop -> project.ext.set(prop.key, prop.value) }
-
 // Common for all projects
 allprojects {
     // Apply the java plugin to add support for Java
@@ -46,7 +42,7 @@ allprojects {
 
 // All subprojects (located in src/*)
 subprojects {
-    group = rootProject.ext.basePackage + ".${rootProject.name}"
+    group = rootProject.property("basePackage") + ".${rootProject.name}"
 
     sourceSets {
         main {

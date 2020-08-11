@@ -37,7 +37,7 @@ class GenerateModuleUtil {
 
     private String createBasePackages(String sourceFolder, String boundedContextName, String moduleName, String moduleFolderPath, String layerName) {
         String folderToCreate = String.format("%s/%s/%s/java", moduleFolderPath, layerName, sourceFolder).replace("/", File.separator)
-        project.ext.basePackage.toString().split("\\.").collect { folder ->
+        project.property("basePackage").split("\\.").collect { folder ->
             folderToCreate = String.format("%s/%s", folderToCreate, folder).replace("/", File.separator)
             new File(folderToCreate).mkdir()
         }
