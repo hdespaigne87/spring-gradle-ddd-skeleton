@@ -130,6 +130,7 @@ sourceSets {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.reflections:reflections:0.9.11'
 
     //Add dependencies for all applications to root project
     File applicationsDir = file(String.format("%s%ssrc%sapplications", projectDir.absolutePath, File.separator, File.separator))
