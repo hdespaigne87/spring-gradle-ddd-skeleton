@@ -1,8 +1,8 @@
 package bounded_contexts.shared.domain.repositories;
 
-import bounded_contexts.shared.domain.ValueObject;
+import bounded_contexts.shared.domain.AggregateRoot;
 
-public interface GenericDeleteRepository<ID extends ValueObject> {
+public interface GenericDeleteRepository<T extends AggregateRoot> {
 
-    void deleteById(ID id);
+    void delete(T aggregateRoot);
 }

@@ -1,6 +1,8 @@
 package bounded_contexts.shared.domain.repositories;
 
-public interface GenericSaveRepository<T> {
+import bounded_contexts.shared.domain.AggregateRoot;
 
-    void save(T entity);
+public interface GenericSaveRepository<T extends AggregateRoot> {
+
+    void save(T aggregateRoot);
 }
