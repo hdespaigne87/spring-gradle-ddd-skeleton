@@ -50,13 +50,6 @@ class GenerateModuleUtil {
         return folderToCreate
     }
 
-    private void createApplicationBasePackages(String applicationBasePackage) {
-        String folderToCreate = String.format("%s/%s", applicationBasePackage, "events_handlers").replace("/", File.separator)
-        new File(folderToCreate).mkdir()
-        folderToCreate = String.format("%s/%s", applicationBasePackage, "use_cases").replace("/", File.separator)
-        new File(folderToCreate).mkdir()
-    }
-
     private void createDomainBasePackages(String domainBasePackage) {
         String folderToCreate = String.format("%s/%s", domainBasePackage, "aggregate_roots").replace("/", File.separator)
         new File(folderToCreate).mkdir()
@@ -71,12 +64,28 @@ class GenerateModuleUtil {
     }
 
     private void createBasePackages(String sourceFolder, String boundedContextName, String moduleName, String moduleFolderPath) {
-        String applicationBasePackage = createBasePackages(sourceFolder, boundedContextName, moduleName, moduleFolderPath, "application")
+        createBasePackages(sourceFolder, boundedContextName, moduleName, moduleFolderPath, "application")
         String domainBasePackage = createBasePackages(sourceFolder, boundedContextName, moduleName, moduleFolderPath, "domain")
         createBasePackages(sourceFolder, boundedContextName, moduleName, moduleFolderPath, "infrastructure")
 
-        createApplicationBasePackages(applicationBasePackage)
         createDomainBasePackages(domainBasePackage)
+    }
+
+    private void createSharedEventsPackage(String boundedContextName, String moduleName) {
+        if (!moduleName.equals("shared")) {
+            String sharedEventsFolder = String.format("%s%s", project.rootDir.absolutePath, "/src/bounded_contexts/shared/domain/main/java/bounded_contexts/shared/domain/events/").replace("/", File.separator)
+            File file = new File(sharedEventsFolder)
+            if (!file.exists())
+                file.mkdir()
+            sharedEventsFolder = String.format("%s%s/", sharedEventsFolder, boundedContextName).replace("/", File.separator)
+            file = new File(sharedEventsFolder)
+            if (!file.exists())
+                file.mkdir()
+            sharedEventsFolder = String.format("%s%s", sharedEventsFolder, moduleName).replace("/", File.separator)
+            file = new File(sharedEventsFolder)
+            if (!file.exists())
+                file.mkdir()
+        }
     }
 
     void createModule(String boundedContextName, String moduleName) {
@@ -89,5 +98,6 @@ class GenerateModuleUtil {
 
         createBasePackages("main", boundedContextName, moduleName, targetFolder)
         createBasePackages("test", boundedContextName, moduleName, targetFolder)
+        createSharedEventsPackage(boundedContextName, moduleName)
     }
 }
